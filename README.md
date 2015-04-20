@@ -31,14 +31,14 @@ First you should create a client instance that is anonymous or authorized with a
 To initialise an anonymous client:
 
 ```
-from quick pay import QPClient
+from quickpay import QPClient
 client = QPClient()
 ```
 
 To initialise a client with QuickPay Api Key:
 
 ```
-from quick pay import QPClient
+from quickpay import QPClient
 secret = ":{0}".format(os.environ['QUICKPAY_API_KEY])
 client = QPClient(secret)
 ```
@@ -46,12 +46,10 @@ client = QPClient(secret)
 Or you can provide login credentials like:
 
 ```
-from quick pay import QPClient
+from quickpay import QPClient
 secret= "{0}:{1}".format(os.environ['QUICKPAY_LOGIN'], os.environ['QUICKPAY_PASSWORD'])
 client = QPClient(secret)
 ```
-
-
 
 API Calls
 ---------
@@ -84,7 +82,7 @@ By default (get|post|patch|put|delete) will return JSON parsed body on success (
 You can listen for any api error like:
 
 ```
-from quick pay.exceptions import ApiError
+from quickpay.exceptions import ApiError
 try:
   client.post("/payments", currency='DKK', order_id='1212')
   ... 
