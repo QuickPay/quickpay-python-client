@@ -9,11 +9,11 @@ Installation
 
 Add to your `requirements.txt`
   
-  quickpay
+    quickpay
 
 or install via [pip](https://github.com/pypa/pip):
 
-  $ pip install quickpay-python-client
+    $ pip install quickpay-python-client
 
 It is currently tested with Python >= 2.5 and Python 3.
 
