@@ -57,8 +57,8 @@ API Calls
 You can afterwards call any method described in QuickPay api with corresponding http method and endpoint. These methods are supported currently: `get`, `post`, `put`, `patch` and `delete`.
 
 ```
-for activity in client.get("/activities"):
-  print activity['id']
+for activity in client.get('/activities'):
+    print activity['id']
 ```
 
 If you want raw http response, headers Please add `raw=True` parameter:
@@ -67,10 +67,10 @@ If you want raw http response, headers Please add `raw=True` parameter:
 status, body, headers = client.get("/activities", raw=True)
 
 if status == 200:
-  for activity in json.loads(body):  ## note: import json
-    print activity['id']
+    for activity in json.loads(body):  ## note: import json
+      print activity['id']
 else:
-  print "Error", body
+    print "Error", body
 ```
 
 Handling API exceptions
@@ -83,10 +83,10 @@ You can listen for any api error like:
 ```
 from quickpay.exceptions import ApiError
 try:
-  client.post("/payments", currency='DKK', order_id='1212')
-  ...
+    client.post('/payments', currency='DKK', order_id='1212')
+    ...
 except ApiError, e:
-  puts e.body
+    print e.body
 ```
 
 You can read more about api responses at [http://tech.quickpay.net/api/](http://tech.quickpay.net/api/).
