@@ -71,7 +71,6 @@ if status == 200:
     print activity['id']
 else:
   print "Error", body
-end
 ```
 
 Handling API exceptions
@@ -86,9 +85,8 @@ from quickpay.exceptions import ApiError
 try:
   client.post("/payments", currency='DKK', order_id='1212')
   ...
-rxcept ApiError, e
+except ApiError, e:
   puts e.body
-end
 ```
 
 You can read more about api responses at [http://tech.quickpay.net/api/](http://tech.quickpay.net/api/).
