@@ -8,7 +8,7 @@ Installation
 ===============
 
 Add to your `requirements.txt`
-  
+
     quickpay
 
 or install via [pip](https://github.com/pypa/pip):
@@ -39,7 +39,7 @@ To initialise a client with QuickPay Api Key:
 
 ```
 from quickpay import QPClient
-secret = ":{0}".format(os.environ['QUICKPAY_API_KEY])
+secret = ":{0}".format(os.environ['QUICKPAY_API_KEY'])
 client = QPClient(secret)
 ```
 
@@ -57,8 +57,8 @@ API Calls
 You can afterwards call any method described in QuickPay api with corresponding http method and endpoint. These methods are supported currently: `get`, `post`, `put`, `patch` and `delete`.
 
 ```
-for activity in client.get("/activities"):
-  print activity['id']
+for activity in client.get('/activities'):
+    print activity['id']
 ```
 
 If you want raw http response, headers Please add `raw=True` parameter:
@@ -67,28 +67,26 @@ If you want raw http response, headers Please add `raw=True` parameter:
 status, body, headers = client.get("/activities", raw=True)
 
 if status == 200:
-  for activity in json.loads(body):  ## note: import json
-    print activity['id']
+    for activity in json.loads(body):  ## note: import json
+      print activity['id']
 else:
-  print "Error", body
-end
+    print "Error", body
 ```
 
 Handling API exceptions
 ----------------------
 
-By default (get|post|patch|put|delete) will return JSON parsed body on success (i.e. 2xx response code) otherwise it will raise `ApiError`. Your code should handle the errors appropriately. 
+By default (get|post|patch|put|delete) will return JSON parsed body on success (i.e. 2xx response code) otherwise it will raise `ApiError`. Your code should handle the errors appropriately.
 
 You can listen for any api error like:
 
 ```
 from quickpay.exceptions import ApiError
 try:
-  client.post("/payments", currency='DKK', order_id='1212')
-  ... 
-rxcept ApiError, e
-  puts e.body
-end
+    client.post('/payments', currency='DKK', order_id='1212')
+    ...
+except ApiError, e:
+    print e.body
 ```
 
 You can read more about api responses at [http://tech.quickpay.net/api/](http://tech.quickpay.net/api/).
