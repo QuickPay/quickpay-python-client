@@ -14,3 +14,5 @@ class QPClient(object):
     def __getattr__(self, method):
         if method in self.METHODS:
             return partial(getattr(self.api, 'perform'), method)
+        else:
+            raise AttributeError('unsupported http method: %s' % method)

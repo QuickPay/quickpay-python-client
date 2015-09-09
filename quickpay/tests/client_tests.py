@@ -34,4 +34,7 @@ class TestQPClient(object):
         self.api.perform.assert_called_once_with("patch", "/dummy")
 
     def test_non_http_method(self):
-        assert_raises(AttributeError, self.client.foobar, "/dummy")
+        def request_foobar(client, path):
+            return self.client.foobar(path)
+
+        assert_raises(AttributeError, request_foobar, self.client, "/dummy")
