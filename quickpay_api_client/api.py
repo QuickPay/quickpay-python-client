@@ -7,8 +7,8 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
 
-from quickpay import exceptions
-import quickpay
+from quickpay_api_client import exceptions
+import quickpay_api_client
 
 
 class QPAdapter(HTTPAdapter):
@@ -49,7 +49,7 @@ class QPApi(object):
 
         headers = {
             "Accept-Version": 'v%s' % self.api_version,
-            "User-Agent": "quickpay-python-client, v%s" % quickpay.__version__
+            "User-Agent": "quickpay-python-client, v%s" % quickpay_api_client.__version__
         }
 
         if self.secret:

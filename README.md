@@ -9,11 +9,11 @@ Installation
 
 Add to your `requirements.txt`
 
-    quickpay
+    quickpay-api-client
 
 or install via [pip](https://github.com/pypa/pip):
 
-    $ pip install quickpay-python-client
+    $ pip install quickpay-api-client
 
 It is currently tested with Python >= 2.5 and Python 3.
 
@@ -31,14 +31,14 @@ First you should create a client instance that is anonymous or authorized with a
 To initialise an anonymous client:
 
 ```
-from quickpay import QPClient
+from quickpay_api_client import QPClient
 client = QPClient()
 ```
 
 To initialise a client with QuickPay Api Key:
 
 ```
-from quickpay import QPClient
+from quickpay_api_client import QPClient
 secret = ":{0}".format(os.environ['QUICKPAY_API_KEY'])
 client = QPClient(secret)
 ```
@@ -46,7 +46,7 @@ client = QPClient(secret)
 Or you can provide login credentials like:
 
 ```
-from quickpay import QPClient
+from quickpay_api_client import QPClient
 secret= "{0}:{1}".format(os.environ['QUICKPAY_LOGIN'], os.environ['QUICKPAY_PASSWORD'])
 client = QPClient(secret)
 ```
@@ -81,7 +81,7 @@ By default (get|post|patch|put|delete) will return JSON parsed body on success (
 You can listen for any api error like:
 
 ```
-from quickpay.exceptions import ApiError
+from quickpay_api_client.exceptions import ApiError
 try:
     client.post('/payments', currency='DKK', order_id='1212')
     ...
