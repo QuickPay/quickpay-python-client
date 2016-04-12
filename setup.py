@@ -25,6 +25,7 @@ setup(
     author="QuickPay Developers",
     url="https://github.com/QuickPay/quickpay-python-client",
     packages=['quickpay_api_client'],
+    license='MIT',
     install_requires=reqs,
     tests_requires=tests_requires,
     test_suite='nose.collector')
