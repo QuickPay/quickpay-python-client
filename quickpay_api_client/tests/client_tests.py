@@ -1,6 +1,6 @@
 from nose.tools import assert_equal, assert_raises
-from quickpay.api import QPApi
-from quickpay import QPClient
+from quickpay_api_client.api import QPApi
+from quickpay_api_client import QPClient
 from mock import MagicMock
 
 

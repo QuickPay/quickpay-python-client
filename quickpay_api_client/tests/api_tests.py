@@ -1,8 +1,8 @@
 import base64, json
 from nose.tools import assert_equal, assert_raises
 import requests
-from quickpay.api import QPApi
-from quickpay.exceptions import ApiError
+from quickpay_api_client.api import QPApi
+from quickpay_api_client.exceptions import ApiError
 import httpretty
 
 
