@@ -74,7 +74,7 @@ class QPApi(object):
             body = response.text
 
         if response.status_code >= 400:
-            raise exceptions.ApiError(body)
+            raise exceptions.ApiError(body, response.status_code)
 
         if raw:
             return [response.status_code, response.text, response.headers]
