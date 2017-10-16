@@ -7,7 +7,7 @@ import sys, re
 
 reqs = ['requests>=2.5']
 
-tests_requires = ['nose', 'httpretty', 'mock']
+tests_requires = ['nose', 'responses', 'mock']
 
 version = ''
 with open('quickpay_api_client/__init__.py', 'r') as fd:

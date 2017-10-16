@@ -10,14 +10,12 @@ from requests.packages.urllib3.poolmanager import PoolManager
 from quickpay_api_client import exceptions
 import quickpay_api_client
 
-
 class QPAdapter(HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False):
         self.poolmanager = PoolManager(num_pools=connections,
                                        maxsize=maxsize,
                                        block=block,
                                        ssl_version=ssl.PROTOCOL_TLSv1)
-
 
 class QPApi(object):
     api_version = '10'

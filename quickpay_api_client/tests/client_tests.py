@@ -3,7 +3,6 @@ from quickpay_api_client.api import QPApi
 from quickpay_api_client import QPClient
 from mock import MagicMock
 
-
 class TestQPClient(object):
     def setup(self):
         self.client = QPClient('foobar')
