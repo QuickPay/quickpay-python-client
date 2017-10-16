@@ -27,7 +27,11 @@ class TestApi(object):
                                status=500,
                                json={'message': 'dummy'})
 
-        assert_raises(ApiError, self.api.perform, 'get', '/test')
+        try:
+            self.api.perform("get", "/test")
+        except ApiError as err:
+            assert_equal(err.body, {'message': 'dummy'})
+            assert_equal(err.status_code, 500)
 
     @responses.activate
     def test_headers(self):

@@ -85,8 +85,9 @@ from quickpay_api_client.exceptions import ApiError
 try:
     client.post('/payments', currency='DKK', order_id='1212')
     ...
-except ApiError, e:
+except ApiError as e:
     print e.body
+    print e.status_code
 ```
 
 You can read more about api responses at [http://tech.quickpay.net/api/](http://tech.quickpay.net/api/).
