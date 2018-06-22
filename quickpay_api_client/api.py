@@ -50,6 +50,10 @@ class QPApi(object):
             "User-Agent": "quickpay-python-client, v%s" % quickpay_api_client.__version__
         }
 
+        callback_url = kwargs.pop("callback_url", None)
+        if callback_url:
+            headers["Quickpay-Callback-Url"] = callback_url
+
         if self.secret:
             headers["Authorization"
                     ] = "Basic {0}".format(_base64_encode(self.secret))

@@ -44,6 +44,15 @@ class TestApi(object):
         assert req_headers['User-Agent']
 
     @responses.activate
+    def test_callback_url_headers(self):
+        self.setup_request()
+        callback_url = "https://foo.bar"
+        res = self.api.perform("get", "/test", callback_url=callback_url)
+
+        req_headers = responses.calls[0].request.headers
+        assert_equal(req_headers['Quickpay-Callback-Url'], callback_url)
+
+    @responses.activate
     def test_perform_when_raw(self):
         self.setup_request()
         res = self.api.perform('get', '/test', raw=True)
