@@ -15,7 +15,7 @@ or install via [pip](https://github.com/pypa/pip):
 
     $ pip install quickpay-api-client
 
-It is currently tested with Python >= 2.5 and Python 3.
+It is currently tested with Python >= `2.7.9` and Python >= `3.4`.
 
 Usage
 =====
