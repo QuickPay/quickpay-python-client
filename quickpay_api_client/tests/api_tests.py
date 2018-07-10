@@ -50,7 +50,7 @@ class TestApi(object):
         res = self.api.perform("get", "/test", callback_url=callback_url)
 
         req_headers = responses.calls[0].request.headers
-        assert_equal(req_headers['Quickpay-Callback-Url'], callback_url)
+        assert_equal(req_headers['QuickPay-Callback-Url'], callback_url)
 
     @responses.activate
     def test_perform_when_raw(self):
