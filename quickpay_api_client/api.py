@@ -52,7 +52,7 @@ class QPApi(object):
 
         callback_url = kwargs.pop("callback_url", None)
         if callback_url:
-            headers["Quickpay-Callback-Url"] = callback_url
+            headers["QuickPay-Callback-Url"] = callback_url
 
         if self.secret:
             headers["Authorization"
