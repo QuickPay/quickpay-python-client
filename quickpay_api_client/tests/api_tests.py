@@ -1,5 +1,5 @@
 import base64, json
-from nose.tools import assert_equal, assert_raises
+from nose.tools import assert_equal, assert_raises, assert_in, assert_not_in
 import requests
 from quickpay_api_client.api import QPApi
 from quickpay_api_client.exceptions import ApiError
@@ -51,6 +51,36 @@ class TestApi(object):
 
         req_headers = responses.calls[0].request.headers
         assert_equal(req_headers['QuickPay-Callback-Url'], callback_url)
+
+    @responses.activate
+    def test_callback_url_headers_regression(self):
+        """
+        Some urls don't support callback_url header
+        """
+        url = "{0}{1}".format(self.api.base_url, '/payments/1/link')
+        responses.add(responses.PUT, url,
+                               status=200,
+                               json={'message': 'dummy'})
+        self.setup_request()
+        callback_url = "https://foo.bar"
+        res = self.api.perform("put", "/payments/1/link", callback_url=callback_url)
+
+        req_headers = responses.calls[0].request.headers.keys()
+
+        assert_in(callback_url, responses.calls[0].request.body)
+        assert_equal(req_headers.__contains__('QuickPay-Callback-Url'), False)
+
+        url = "{0}{1}".format(self.api.base_url, '/payouts/1/link')
+        responses.add(responses.PUT, url,
+                               status=200,
+                               json={'message': 'dummy'})
+
+        res = self.api.perform("put", "/payouts/1/link", callback_url=callback_url)
+
+        req_headers = responses.calls[1].request.headers.keys()
+
+        assert_in(callback_url, responses.calls[1].request.body)
+        assert_equal(req_headers.__contains__('QuickPay-Callback-Url'), False)
 
     @responses.activate
     def test_perform_when_raw(self):

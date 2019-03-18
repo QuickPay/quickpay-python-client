@@ -2,6 +2,7 @@ import json
 import ssl
 import base64
 import sys
+import re
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -50,9 +51,15 @@ class QPApi(object):
             "User-Agent": "quickpay-python-client, v%s" % quickpay_api_client.__version__
         }
 
-        callback_url = kwargs.pop("callback_url", None)
-        if callback_url:
-            headers["QuickPay-Callback-Url"] = callback_url
+        supports_callback_header = re.search(
+                "^/account|(^/(payouts|payments|subscriptions)/.*?/link)$", 
+                path
+        ) is None
+
+        if supports_callback_header:
+            callback_url = kwargs.pop("callback_url", None)
+            if callback_url:
+                headers["QuickPay-Callback-Url"] = callback_url
 
         if self.secret:
             headers["Authorization"
