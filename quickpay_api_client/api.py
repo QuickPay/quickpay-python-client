@@ -10,6 +10,11 @@ from requests.packages.urllib3.poolmanager import PoolManager
 from quickpay_api_client import exceptions
 import quickpay_api_client
 
+def merge_dicts(x, y):
+    z = x.copy()
+    z.update(y)
+    return z
+
 class QPAdapter(HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False):
         self.poolmanager = PoolManager(num_pools=connections,
@@ -45,14 +50,11 @@ class QPApi(object):
         raw = kwargs.pop('raw', False)
         url = "{0}{1}".format(self.base_url, path)
 
-        headers = {
+        default_headers = {
             "Accept-Version": 'v%s' % self.api_version,
             "User-Agent": "quickpay-python-client, v%s" % quickpay_api_client.__version__
         }
-
-        callback_url = kwargs.pop("callback_url", None)
-        if callback_url:
-            headers["QuickPay-Callback-Url"] = callback_url
+        headers = merge_dicts(default_headers, kwargs.pop('headers', {}))
 
         if self.secret:
             headers["Authorization"
