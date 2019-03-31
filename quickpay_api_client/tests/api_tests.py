@@ -1,4 +1,5 @@
-import base64, json
+import base64
+import json
 from nose.tools import assert_equal, assert_raises
 import requests
 from quickpay_api_client.api import QPApi
@@ -12,8 +13,8 @@ class TestApi(object):
 
     def setup_request(self):
         responses.add(responses.GET, self.url,
-                    json={'id': 123},
-                    headers={"x-quickpay-server" : "QP-TEST"})
+                      json={'id': 123},
+                      headers={"x-quickpay-server": "QP-TEST"})
 
     @responses.activate
     def test_perform_success(self):
@@ -24,8 +25,8 @@ class TestApi(object):
     @responses.activate
     def test_perform_failure(self):
         responses.add(responses.GET, self.url,
-                               status=500,
-                               json={'message': 'dummy'})
+                      status=500,
+                      json={'message': 'dummy'})
 
         try:
             self.api.perform("get", "/test")
@@ -47,10 +48,39 @@ class TestApi(object):
     def test_callback_url_headers(self):
         self.setup_request()
         callback_url = "https://foo.bar"
-        res = self.api.perform("get", "/test", callback_url=callback_url)
+        self.api.perform(
+            "get", "/test", headers={'QuickPay-Callback-Url': callback_url})
 
         req_headers = responses.calls[0].request.headers
         assert_equal(req_headers['QuickPay-Callback-Url'], callback_url)
+
+    @responses.activate
+    def test_query_params(self):
+        self.setup_request()
+        self.api.perform("get", "/test", query={'foo': 'bar'})
+
+        url = responses.calls[0].request.url
+        assert(url.endswith('?foo=bar'))
+
+    @responses.activate
+    def test_post_body(self):
+        responses.add(responses.POST, self.url,
+                      status=200,
+                      json={'message': 'dummy'})
+
+        self.api.perform("post", "/test", query={"foo": "baz"},
+                         body={'foo': 'bar'})
+
+        last_request = responses.calls[0].request
+        body = last_request.body
+        parsed_body = json.loads(body)
+        headers = last_request.headers
+
+        assert_equal(parsed_body["foo"], "bar")
+        assert(headers["Authorization"])
+        assert(headers["Accept-Version"])
+        assert(headers["User-Agent"])
+        assert(last_request.url.endswith('?foo=baz'))
 
     @responses.activate
     def test_perform_when_raw(self):

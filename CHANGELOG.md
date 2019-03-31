@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## UNRELEASED
+
+### Breaking
+- [Sending request with body, headers, and query](https://github.com/QuickPay/quickpay-python-client/issues/16#issuecomment-474115554)
+
 ### Fixed
 - [Callback header typo fix](https://github.com/QuickPay/quickpay-python-client/issues/16)
 
