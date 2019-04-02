@@ -45,6 +45,7 @@ class QPApi(object):
 
     def perform(self, method, path, **kwargs):
         raw = kwargs.pop('raw', False)
+        ssl_verify = kwargs.pop("verify", True)
         url = "{0}{1}".format(self.base_url, path)
 
         headers = {
@@ -73,12 +74,14 @@ class QPApi(object):
                                     data=body,
                                     params=query,
                                     headers=headers,
-                                    timeout=self.timeout)
+                                    timeout=self.timeout,
+                                    verify=ssl_verify)
         else:
             response = self.fulfill(method, url,
                                     params=query,
                                     headers=headers,
-                                    timeout=self.timeout)
+                                    timeout=self.timeout,
+                                    verify=ssl_verify)
 
         if response.headers.get('content-type') == 'application/json':
             body = response.json()
