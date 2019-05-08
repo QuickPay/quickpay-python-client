@@ -73,6 +73,21 @@ else:
     print "Error", body
 ```
 
+Beyond the endpoint, the client accepts the following options (default values shown):
+
+* `body: ""` ( valid for POST, PATCH and PUT)
+* `headers: {}`
+* `query: {}`
+* `raw: false`
+
+```python
+response = client.post("/payments/1/capture",
+  body={ 'amount': 100 },
+  query={ "synchronized" : "" },
+  raw=False
+)
+```
+
 Handling API exceptions
 ----------------------
 

@@ -10,12 +10,14 @@ from requests.packages.urllib3.poolmanager import PoolManager
 from quickpay_api_client import exceptions
 import quickpay_api_client
 
+
 class QPAdapter(HTTPAdapter):
     def init_poolmanager(self, connections, maxsize, block=False):
         self.poolmanager = PoolManager(num_pools=connections,
                                        maxsize=maxsize,
                                        block=block,
                                        ssl_version=ssl.PROTOCOL_TLSv1_1)
+
 
 class QPApi(object):
     api_version = '10'
@@ -43,6 +45,7 @@ class QPApi(object):
 
     def perform(self, method, path, **kwargs):
         raw = kwargs.pop('raw', False)
+        ssl_verify = kwargs.pop("verify", True)
         url = "{0}{1}".format(self.base_url, path)
 
         headers = {
@@ -50,25 +53,35 @@ class QPApi(object):
             "User-Agent": "quickpay-python-client, v%s" % quickpay_api_client.__version__
         }
 
-        callback_url = kwargs.pop("callback_url", None)
-        if callback_url:
-            headers["QuickPay-Callback-Url"] = callback_url
+        body = kwargs.get("body", {})
+        query = kwargs.get("query", {})
+
+        for key in kwargs.get("headers", {}):
+            headers[key] = kwargs['headers'][key]
 
         if self.secret:
-            headers["Authorization"
-                    ] = "Basic {0}".format(_base64_encode(self.secret))
+            headers["Authorization"] = "Basic {0}".format(
+                _base64_encode(self.secret))
 
         if method in ['put', 'post', 'patch']:
             headers['content-type'] = 'application/json'
+
+            # The bytes class isn't considered a string type in Python 3
+            if not isinstance(body, (str, bytes)):
+                body = json.dumps(body)
+
             response = self.fulfill(method, url,
-                                    data=json.dumps(kwargs),
+                                    data=body,
+                                    params=query,
                                     headers=headers,
-                                    timeout=self.timeout)
+                                    timeout=self.timeout,
+                                    verify=ssl_verify)
         else:
             response = self.fulfill(method, url,
-                                    params=kwargs,
+                                    params=query,
                                     headers=headers,
-                                    timeout=self.timeout)
+                                    timeout=self.timeout,
+                                    verify=ssl_verify)
 
         if response.headers.get('content-type') == 'application/json':
             body = response.json()
