@@ -16,7 +16,7 @@ class QPAdapter(HTTPAdapter):
         self.poolmanager = PoolManager(num_pools=connections,
                                        maxsize=maxsize,
                                        block=block,
-                                       ssl_version=ssl.PROTOCOL_TLSv1_1)
+                                       ssl_version=ssl.PROTOCOL_TLSv1_2)
 
 
 class QPApi(object):
