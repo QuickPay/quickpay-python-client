@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## UNRELEASED
 
+[2.0.1] - 02-03-2020
+## Fixed
+- [Deprecate TLS 1.1](https://github.com/QuickPay/quickpay-python-client/pull/21)
+
 [2.0.0] - 08-05-2019
 ### Breaking
 - [Sending request with body, headers, and query](https://github.com/QuickPay/quickpay-python-client/issues/16#issuecomment-474115554)
