@@ -98,7 +98,7 @@ You can listen for any api error like:
 ```
 from quickpay_api_client.exceptions import ApiError
 try:
-    client.post('/payments', currency='DKK', order_id='1212')
+    client.post('/payments', body={'currency': 'DKK', 'order_id': '1212'})
     ...
 except ApiError as e:
     print e.body
