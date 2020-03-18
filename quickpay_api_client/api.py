@@ -15,7 +15,8 @@ class QPAdapter(HTTPAdapter):
     def __init__(self, ssl_version=None, **kwargs):
         self.ssl_version = ssl_version
 
-        super(SSLAdapter, self).__init__(**kwargs)
+        super(QPAdapter, self).__init__(**kwargs)
+
 
     def init_poolmanager(self, connections, maxsize, block=False):
         self.poolmanager = PoolManager(num_pools=connections,
